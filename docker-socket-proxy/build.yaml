@@ -1,2 +1,1 @@
-build_from:
-  amd64: haproxy:3.2.4-alpine
+# HA Supervisor will use its default Alpine base image and we'll install haproxy via apk

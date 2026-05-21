@@ -11,4 +11,4 @@ RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 EXPOSE 2375
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["haproxy", "-f", "/tmp/haproxy.cfg"]
+CMD ["/usr/local/sbin/haproxy", "-f", "/tmp/haproxy.cfg"]

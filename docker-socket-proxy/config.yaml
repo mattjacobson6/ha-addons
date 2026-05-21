@@ -1,5 +1,5 @@
 name: Docker Socket Proxy
-version: "2.0.5"
+version: "2.0.6"
 slug: docker_socket_proxy
 description: >-
   Expose a restricted view of the Docker socket over TCP using HAProxy.

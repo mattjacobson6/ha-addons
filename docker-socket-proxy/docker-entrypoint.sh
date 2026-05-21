@@ -97,8 +97,8 @@ VERSION=$(normalize "$VERSION")
 VOLUMES=$(normalize "$VOLUMES")
 
 # Generate HAProxy config from template by replacing placeholders
-cat "$TEMPLATE_FILE" | \
-  sed "s|%%ALLOW_RESTARTS%%|$ALLOW_RESTARTS|g" \
+sed \
+  -e "s|%%ALLOW_RESTARTS%%|$ALLOW_RESTARTS|g" \
   -e "s|%%ALLOW_START%%|$ALLOW_START|g" \
   -e "s|%%ALLOW_STOP%%|$ALLOW_STOP|g" \
   -e "s|%%AUTH%%|$AUTH|g" \
@@ -128,7 +128,7 @@ cat "$TEMPLATE_FILE" | \
   -e "s|%%TASKS%%|$TASKS|g" \
   -e "s|%%VERSION%%|$VERSION|g" \
   -e "s|%%VOLUMES%%|$VOLUMES|g" \
-  > "$OUTPUT_FILE"
+  "$TEMPLATE_FILE" > "$OUTPUT_FILE"
 
 echo "[INFO] Docker Socket Proxy starting..."
 echo "[INFO] HAProxy config generated at $OUTPUT_FILE"

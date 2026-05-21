@@ -1,0 +1,74 @@
+name: Docker Socket Proxy
+version: "1.0.0"
+slug: docker_socket_proxy
+description: >-
+  Expose a restricted view of the Docker socket over TCP using
+  linuxserver/socket-proxy. Lets tools like Watchtower, Portainer Agent, or
+  Traefik reach Docker without full daemon access.
+url: https://github.com/mattjacobson6/ha-addons/tree/main/docker-socket-proxy
+stage: experimental
+advanced: true
+
+arch:
+  - amd64
+
+# Mounts /var/run/docker.sock into the add-on container (rw required by proxy)
+docker_api: true
+
+host_network: false
+
+ports:
+  2375/tcp: 2375
+ports_description:
+  2375/tcp: Docker Socket Proxy (HAProxy TCP)
+
+# Default values — all write/dangerous endpoints are off
+options:
+  containers: true
+  info: true
+  events: true
+  ping: true
+  auth: false
+  build: false
+  commit: false
+  configs: false
+  distribution: false
+  exec: false
+  grpc: false
+  images: false
+  networks: false
+  nodes: false
+  plugins: false
+  post: false
+  secrets: false
+  services: false
+  session: false
+  swarm: false
+  system: false
+  tasks: false
+  volumes: false
+
+schema:
+  containers: bool
+  info: bool
+  events: bool
+  ping: bool
+  auth: bool
+  build: bool
+  commit: bool
+  configs: bool
+  distribution: bool
+  exec: bool
+  grpc: bool
+  images: bool
+  networks: bool
+  nodes: bool
+  plugins: bool
+  post: bool
+  secrets: bool
+  services: bool
+  session: bool
+  swarm: bool
+  system: bool
+  tasks: bool
+  volumes: bool

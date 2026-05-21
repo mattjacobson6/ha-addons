@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Recurse \"C:\\\\OneDrive\\\\Maker\\\\Home Assistant\\\\Claude - Git Addons\")",
+      "Bash(Select-Object FullName)"
+    ]
+  }
+}

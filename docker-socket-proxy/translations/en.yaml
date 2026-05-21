@@ -1,0 +1,73 @@
+configuration:
+  containers:
+    name: Containers API
+    description: Allow access to /containers/* endpoints (list, inspect, logs, stats).
+  info:
+    name: Info API
+    description: Allow access to /info (daemon metadata).
+  events:
+    name: Events API
+    description: Allow access to /events (real-time Docker event stream).
+  ping:
+    name: Ping API
+    description: Allow access to /_ping (liveness check).
+  auth:
+    name: Auth API
+    description: Allow access to /auth (registry authentication).
+  build:
+    name: Build API
+    description: Allow access to /build (image build from Dockerfile).
+  commit:
+    name: Commit API
+    description: Allow access to /commit (create image from container).
+  configs:
+    name: Configs API
+    description: Allow access to /configs (Docker Swarm configs).
+  distribution:
+    name: Distribution API
+    description: Allow access to /distribution (image distribution metadata).
+  exec:
+    name: Exec API
+    description: Allow access to /exec/* (run commands inside containers).
+  grpc:
+    name: gRPC API
+    description: Allow access to /grpc (gRPC proxy).
+  images:
+    name: Images API
+    description: Allow access to /images/* (list, inspect, pull, push images).
+  networks:
+    name: Networks API
+    description: Allow access to /networks/* (inspect and list Docker networks).
+  nodes:
+    name: Nodes API
+    description: Allow access to /nodes (Docker Swarm nodes).
+  plugins:
+    name: Plugins API
+    description: Allow access to /plugins (Docker plugin management).
+  post:
+    name: Allow POST (write) requests
+    description: >-
+      When enabled, POST requests are forwarded in addition to GET/HEAD.
+      Required for any operation that creates or modifies resources.
+      Enable only for endpoints you have explicitly allowed above.
+  secrets:
+    name: Secrets API
+    description: Allow access to /secrets (Docker Swarm secrets — sensitive).
+  services:
+    name: Services API
+    description: Allow access to /services (Docker Swarm services).
+  session:
+    name: Session API
+    description: Allow access to /session (interactive session stream).
+  swarm:
+    name: Swarm API
+    description: Allow access to /swarm (Docker Swarm cluster management).
+  system:
+    name: System API
+    description: Allow access to /system (system-wide operations and data usage).
+  tasks:
+    name: Tasks API
+    description: Allow access to /tasks (Docker Swarm task inspection).
+  volumes:
+    name: Volumes API
+    description: Allow access to /volumes/* (list and inspect Docker volumes).

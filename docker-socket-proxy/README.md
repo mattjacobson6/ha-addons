@@ -1,15 +1,14 @@
 # Docker Socket Proxy — Home Assistant Add-on
 
-Wraps [linuxserver/socket-proxy](https://github.com/linuxserver/docker-socket-proxy) as a
-trusted Home Assistant add-on. The proxy sits between the Docker daemon and any client that
-needs Docker API access, enforcing a per-endpoint allowlist so you never expose more than
-your tools actually need.
+A secure Docker socket proxy for Home Assistant, based on the official [HAProxy](https://www.haproxy.org/)
+image. The proxy sits between the Docker daemon and any client that needs Docker API access,
+enforcing a per-endpoint allowlist so you never expose more than your tools actually need.
 
 ## Why?
 
 Giving a container direct access to `/var/run/docker.sock` is equivalent to giving it root
 on the host. The socket proxy lets you grant fine-grained read-only (or limited write)
-access instead.
+access instead. This add-on uses HAProxy to enforce strict ACLs on every Docker API request.
 
 ## Typical consumers
 
@@ -28,20 +27,22 @@ access instead.
 
 2. Install **Docker Socket Proxy** from the store.
 
-3. Configure which API endpoints to expose in the add-on **Configuration** tab.
+3. **IMPORTANT:** Go to the add-on **Info** tab and turn off **Protection mode**.
 
-4. Start the add-on. Port **2375** is now available on the HA host.
+4. Configure which API endpoints to expose in the **Configuration** tab.
 
-5. Point your Docker client at `tcp://homeassistant.local:2375` (or the IP of your HA host).
+5. Click **Start**. Port **2375** is now available on the HA host.
+
+6. Point your Docker client at `tcp://homeassistant.local:2375` (or the IP of your HA host).
 
 ## Security notes
 
-- Keep `POST` disabled unless a consumer explicitly needs write access.
-- `SECRETS`, `EXEC`, `SESSION`, and `SWARM` are particularly dangerous — leave them off
-  unless you understand the implications.
+- **Protection mode must be OFF** for the add-on to access the Docker socket.
+- Keep `POST` disabled unless a consumer explicitly needs write operations.
+- `EXEC`, `SECRETS`, `SESSION`, and `SWARM` are particularly dangerous — leave them off
+  unless you fully understand the risks.
 - Restrict network access to port 2375 to trusted hosts only (firewall or VLAN).
-- The add-on requires `docker_api: true`, which mounts the raw Docker socket
-  (`/var/run/docker.sock`) inside the container.
+- The add-on uses the official HAProxy Docker image with a strict default-deny policy.
 
 ## Support
 

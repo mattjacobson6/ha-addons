@@ -1,2 +1,2 @@
 build_from:
-  amd64: lscr.io/linuxserver/socket-proxy:latest
+  amd64: haproxy:3.2.4-alpine

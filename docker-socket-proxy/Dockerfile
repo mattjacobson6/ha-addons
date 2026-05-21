@@ -2,10 +2,13 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# jq is used by run.sh to parse /data/options.json
-RUN apk add --no-cache bash jq
+RUN mkdir -p /var/lib/haproxy && touch /var/lib/haproxy/server-state
 
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg.template
+RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["/run.sh"]
+EXPOSE 2375
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["haproxy", "-f", "/tmp/haproxy.cfg"]

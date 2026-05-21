@@ -1,73 +1,108 @@
 configuration:
-  containers:
-    name: Containers API
-    description: Allow access to /containers/* endpoints (list, inspect, logs, stats).
-  info:
-    name: Info API
-    description: Allow access to /info (daemon metadata).
-  events:
-    name: Events API
-    description: Allow access to /events (real-time Docker event stream).
-  ping:
-    name: Ping API
-    description: Allow access to /_ping (liveness check).
-  auth:
+  ALLOW_RESTARTS:
+    name: Allow Container/Service Restarts
+    description: >-
+      Allow clients to restart containers (/containers/.*/restart) and services
+      (/services/.*/update). Requires CONTAINERS or SERVICES to also be enabled.
+  ALLOW_START:
+    name: Allow Container Start
+    description: >-
+      Allow clients to start stopped containers (/containers/.*/start).
+      Requires CONTAINERS to also be enabled.
+  ALLOW_STOP:
+    name: Allow Container Stop
+    description: >-
+      Allow clients to stop running containers (/containers/.*/stop).
+      Requires CONTAINERS to also be enabled.
+  AUTH:
     name: Auth API
     description: Allow access to /auth (registry authentication).
-  build:
+  BUILD:
     name: Build API
     description: Allow access to /build (image build from Dockerfile).
-  commit:
+  COMMIT:
     name: Commit API
     description: Allow access to /commit (create image from container).
-  configs:
+  CONFIGS:
     name: Configs API
     description: Allow access to /configs (Docker Swarm configs).
-  distribution:
+  CONTAINERS:
+    name: Containers API
+    description: Allow access to /containers/* (list, inspect, logs, stats).
+  DISABLE_IPV6:
+    name: Disable IPv6
+    description: Do not bind HAProxy to IPv6 addresses.
+  DISTRIBUTION:
     name: Distribution API
     description: Allow access to /distribution (image distribution metadata).
-  exec:
+  EVENTS:
+    name: Events API
+    description: Allow access to /events (real-time Docker event stream).
+  EXEC:
     name: Exec API
-    description: Allow access to /exec/* (run commands inside containers).
-  grpc:
+    description: >-
+      Allow access to /exec/* (run commands inside containers).
+      HIGH RISK — allows remote code execution.
+  GRPC:
     name: gRPC API
     description: Allow access to /grpc (gRPC proxy).
-  images:
+  IMAGES:
     name: Images API
     description: Allow access to /images/* (list, inspect, pull, push images).
-  networks:
+  INFO:
+    name: Info API
+    description: Allow access to /info (daemon metadata).
+  LOG_LEVEL:
+    name: Log Level
+    description: HAProxy logging verbosity.
+  NETWORKS:
     name: Networks API
     description: Allow access to /networks/* (inspect and list Docker networks).
-  nodes:
+  NODES:
     name: Nodes API
     description: Allow access to /nodes (Docker Swarm nodes).
-  plugins:
+  PING:
+    name: Ping API
+    description: Allow access to /_ping (liveness check).
+  PLUGINS:
     name: Plugins API
     description: Allow access to /plugins (Docker plugin management).
-  post:
-    name: Allow POST (write) requests
+  POST:
+    name: Allow Write Operations
     description: >-
-      When enabled, POST requests are forwarded in addition to GET/HEAD.
+      When enabled, POST/PUT/DELETE/PATCH requests are forwarded.
       Required for any operation that creates or modifies resources.
-      Enable only for endpoints you have explicitly allowed above.
-  secrets:
+      HIGH RISK — enable only for endpoints you have explicitly allowed.
+  SECRETS:
     name: Secrets API
-    description: Allow access to /secrets (Docker Swarm secrets — sensitive).
-  services:
+    description: >-
+      Allow access to /secrets (Docker Swarm secrets).
+      HIGH RISK — exposes sensitive data.
+  SERVICES:
     name: Services API
     description: Allow access to /services (Docker Swarm services).
-  session:
+  SESSION:
     name: Session API
-    description: Allow access to /session (interactive session stream).
-  swarm:
+    description: >-
+      Allow access to /session (interactive session stream).
+      HIGH RISK.
+  SOCKET_PATH:
+    name: Docker Socket Path
+    description: Path to the Docker daemon socket inside the container.
+  SWARM:
     name: Swarm API
-    description: Allow access to /swarm (Docker Swarm cluster management).
-  system:
+    description: >-
+      Allow access to /swarm (Docker Swarm cluster management).
+      HIGH RISK.
+  SYSTEM:
     name: System API
     description: Allow access to /system (system-wide operations and data usage).
-  tasks:
+  TASKS:
     name: Tasks API
     description: Allow access to /tasks (Docker Swarm task inspection).
-  volumes:
+  VERSION:
+    name: Version API
+    description: Allow access to /version (Docker version information).
+  VOLUMES:
     name: Volumes API
     description: Allow access to /volumes/* (list and inspect Docker volumes).

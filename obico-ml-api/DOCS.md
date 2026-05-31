@@ -18,7 +18,7 @@ While a print is running, BamBuddy periodically sends camera snapshots to this a
 ## BamBuddy setup
 
 In BamBuddy → Settings → Failure Detection:
-- **ML API URL**: `http://192.168.0.2:3333`
+- **ML API URL**: `http://192.168.X.X:XXXX`
 - **ML API Token**: whatever you set above
 
 ## Updating

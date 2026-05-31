@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
 # Builds Obico ml_api directly from the official release branch.
-# Uses Debian base for reliable OpenCV pip install.
 
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.3.3
 FROM ${BUILD_FROM}
@@ -23,10 +22,17 @@ RUN git clone --depth 1 --branch release \
     && cp -r /tmp/obico-server/ml_api /opt/ml_api \
     && rm -rf /tmp/obico-server
 
+# Download model weights
+RUN curl -o /opt/ml_api/model/model-weights.onnx -L \
+        "$(cat /opt/ml_api/model/model-weights.onnx.url | tr -d '\r')"
+
 # Install Python dependencies
+# Remove pinned opencv from requirements and reinstall latest headless version
 RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --no-cache-dir --upgrade pip \
-    && /opt/venv/bin/pip install --no-cache-dir -r /opt/ml_api/requirements.txt
+    && grep -iv "opencv" /opt/ml_api/requirements.txt > /tmp/requirements_no_cv.txt \
+    && /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements_no_cv.txt \
+    && /opt/venv/bin/pip install --no-cache-dir opencv-python-headless
 
 # Copy addon run script
 COPY run.sh /run.sh

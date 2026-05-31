@@ -5,9 +5,8 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base:16.3.2
 FROM ${BUILD_FROM}
 
-# Clone Obico release branch and extract only the ml_api folder
-RUN apk add --no-cache git python3 py3-pip py3-virtualenv \
-    build-base libffi-dev openssl-dev curl \
+# Install only what we need — openssl and build-base already in base image
+RUN apk add --no-cache git python3 py3-pip py3-virtualenv libffi curl \
     && git clone --depth 1 --branch release \
         https://github.com/TheSpaghettiDetective/obico-server.git /tmp/obico-server \
     && cp -r /tmp/obico-server/ml_api /opt/ml_api \

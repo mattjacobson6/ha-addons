@@ -2,7 +2,7 @@
 # Builds Obico ml_api directly from the official release branch.
 # Uses Debian base for reliable OpenCV pip install.
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/base-debian:7.3.3
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.3.3
 FROM ${BUILD_FROM}
 
 # Install system dependencies

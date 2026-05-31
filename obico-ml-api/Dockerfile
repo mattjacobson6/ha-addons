@@ -14,6 +14,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
+        git \
         jq \
         tzdata \
         xz-utils \
@@ -60,7 +61,7 @@ RUN echo 'Downloading darknet model weights...' \
     && echo 'Downloading ONNX model weights...' \
     && wget -O model/model-weights.onnx "$(cat model/model-weights.onnx.url | tr -d '\r')"
 
-# Copy run script and set entrypoint
+# Copy run script
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 

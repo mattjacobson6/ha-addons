@@ -1,6 +1,6 @@
 name: "Obico ML API"
 description: "Obico ML failure detection API server for 3D print monitoring. Built from official Obico source."
-version: "1.0.5"
+version: "1.0.6"
 slug: "obico_ml_api"
 init: false
 arch:

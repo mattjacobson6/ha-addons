@@ -3,7 +3,7 @@ description: >-
   AI-powered 3D printer failure detection using The Spaghetti Detective's
   machine learning model. Detects print failures, tangles, and other issues
   in real-time via webcam analysis.
-version: "1.0.0"
+version: "1.0.1"
 slug: obico_ml
 url: https://github.com/mattjacobson6/ha-addons/tree/main/obico-ml
 

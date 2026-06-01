@@ -3,11 +3,7 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Copy s6-overlay service configuration for HA addon integration
-COPY rootfs /
-
-# Port 8080 is already exposed by the base image
-EXPOSE 8080
-
-# Use s6-overlay init system (HA standard)
-ENTRYPOINT ["/init"]
+# The official Dozzle image handles everything
+# Port 8080 is already exposed
+# Docker socket is mounted via docker_api: true in config.yaml
+# Let the base image's entrypoint handle startup

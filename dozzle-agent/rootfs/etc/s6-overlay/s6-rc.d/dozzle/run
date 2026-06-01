@@ -1,3 +1,0 @@
-#!/command/execlineb -P
-foreground { echo "Starting Dozzle Docker log viewer..." }
-exec /app/dozzle

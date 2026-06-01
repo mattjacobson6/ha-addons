@@ -12,9 +12,6 @@ boot: auto
 
 arch:
   - amd64
-  - aarch64
-  - armhf
-  - armv7
 
 ports:
   8080/tcp: 8080

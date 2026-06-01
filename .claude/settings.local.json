@@ -4,7 +4,13 @@
       "Bash(Get-ChildItem -Recurse \"C:\\\\OneDrive\\\\Maker\\\\Home Assistant\\\\Claude - Git Addons\")",
       "Bash(Select-Object FullName)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(cp \"C:\\\\OneDrive\\\\Maker\\\\Home Assistant\\\\Claude - Git Addons\\\\obico-ml-api\\\\config.yaml\" /tmp/obico_config_backup.yaml)",
+      "Bash(cp -r /tmp/obico_ml_ha_addon \"C:\\\\OneDrive\\\\Maker\\\\Home Assistant\\\\Claude - Git Addons\\\\obico-ml-api\")"
     ]
   }
 }

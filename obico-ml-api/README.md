@@ -1,6 +1,50 @@
-# Obico ML Home Assistant Addon
-HA Addon for [Obico ML REST API server integration](https://github.com/nobodyguy/obico_ml_ha_integration).
+# Obico ML — Home Assistant Add-on
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fnobodyguy%2Fobico_ml_ha_addon)
+AI-powered 3D printer failure detection powered by
+[The Spaghetti Detective](https://github.com/TheSpaghettiDetective).
 
-Based on https://github.com/TheSpaghettiDetective/obico-server and https://github.com/hassio-addons/addon-ubuntu-base
+Detects print failures, tangles, and other anomalies in real-time by analyzing your printer's webcam feed.
+
+## Quick Start
+
+1. Add this repository to Home Assistant:
+   **Settings → Add-ons → Add-on Store → ⋮ → Repositories**
+   Paste: `https://github.com/mattjacobson6/ha-addons`
+
+2. Install **Obico ML** from the store.
+
+3. Wait for the build to complete (ML models are downloaded during build — 5–10 minutes).
+
+4. Configure detection settings in the **Configuration** tab (optional).
+
+5. Click **Start**. The ML API will be available at `http://<HA-IP>:3333`.
+
+## Configuration
+
+- **Detection Interval**: How often to analyze webcam frames (1–30 seconds, default 2s)
+- **Video Rotation**: Rotate camera feed before analysis (0°, 90°, 180°, 270°)
+- **Log Level**: Service verbosity (debug, info, warning, error)
+
+## Features
+
+✅ Real-time failure detection
+✅ Multi-architecture support (amd64, aarch64)
+✅ Pre-trained ML models included
+✅ Configurable detection frequency
+✅ Health checks enabled
+✅ CPU and GPU support
+
+## System Requirements
+
+- **CPU**: 1–2 cores for inference (or GPU if available)
+- **Memory**: 500MB–1GB
+- **Storage**: ~2GB (models included)
+- **Host**: HA OS, Supervised, or Container install
+
+## Documentation
+
+See [DOCS.md](DOCS.md) for complete configuration and troubleshooting.
+
+## Support
+
+Report issues at <https://github.com/mattjacobson6/ha-addons/issues>

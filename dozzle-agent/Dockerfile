@@ -3,7 +3,9 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# The official Dozzle image handles everything
-# Port 8080 is already exposed
-# Docker socket is mounted via docker_api: true in config.yaml
-# Let the base image's entrypoint handle startup
+# Tell Dozzle where to find the Docker socket
+# HA mounts it at /var/run/docker.sock via docker_api: true
+ENV DOCKER_HOST=unix:///var/run/docker.sock
+
+# Port 8080 is already exposed by the base image
+# The base image's entrypoint will handle startup

@@ -25,9 +25,3 @@ healthcheck:
   interval: 30s
   timeout: 10s
   retries: 3
-
-options:
-  log_level: info
-
-schema:
-  log_level: select(debug|info|warn|error)

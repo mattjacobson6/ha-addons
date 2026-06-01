@@ -1,12 +1,44 @@
 version: 2
 updates:
-  # Monitor Docker base images
+  # Monitor Docker Socket Proxy base image
   - package-ecosystem: "docker"
     directory: "/docker-socket-proxy"
     schedule:
       interval: "weekly"
       day: "monday"
       time: "04:00"
+    commit-message:
+      prefix: "chore(deps): "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "mattjacobson6"
+
+  # Monitor Obico ML base image
+  - package-ecosystem: "docker"
+    directory: "/obico-ml-api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:15"
+    commit-message:
+      prefix: "chore(deps): "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "mattjacobson6"
+
+  # Monitor Dozzle Agent base image
+  - package-ecosystem: "docker"
+    directory: "/dozzle-agent"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:30"
     commit-message:
       prefix: "chore(deps): "
       include: "scope"

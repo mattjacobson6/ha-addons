@@ -1,11 +1,7 @@
-name: Obico ML
-description: >-
-  AI-powered 3D printer failure detection using The Spaghetti Detective's
-  machine learning model. Detects print failures, tangles, and other issues
-  in real-time via webcam analysis.
-version: "1.7.0"
-slug: obico_ml
-url: https://github.com/mattjacobson6/ha-addons/tree/main/obico-ml
+name: "Obico ML API"
+description: "Obico ML failure detection API server for 3D print monitoring. Built from The Spaghetti Detective's Container"
+version: "1.0.7"
+slug: "obico_ml_api"
 
 init: false
 startup: services
@@ -13,12 +9,11 @@ boot: auto
 
 arch:
   - amd64
-  - aarch64
 
 ports:
   3333/tcp: 3333
 ports_description:
-  3333/tcp: Obico ML API (REST endpoint)
+  3333/tcp: "Obico ML API REST endpoint"
 
 webui: "http://[HOST]:[PORT:3333]"
 

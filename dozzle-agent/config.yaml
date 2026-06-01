@@ -2,7 +2,7 @@ name: Dozzle Agent
 description: >-
   Lightweight Docker log aggregator and viewer. View Docker container logs
   in real-time with a simple web interface.
-version: "1.0.1"
+version: "1.0.2"
 slug: dozzle_agent
 url: https://github.com/mattjacobson6/ha-addons/tree/main/dozzle-agent
 

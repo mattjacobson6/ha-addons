@@ -1,6 +1,6 @@
 name: "Obico ML API"
 description: "Obico ML failure detection API server for 3D print monitoring. Built from The Spaghetti Detective's Container"
-version: "1.0.7"
+version: "1.0.8"
 slug: "obico_ml_api"
 
 init: false

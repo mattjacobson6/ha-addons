@@ -15,21 +15,8 @@ ports:
 ports_description:
   3333/tcp: "Obico ML API REST endpoint"
 
-webui: "http://[HOST]:[PORT:3333]"
-
 healthcheck:
   enabled: true
   interval: 30s
   timeout: 10s
   retries: 3
-
-# Configuration options exposed to HA users
-options:
-  detection_interval: 2
-  video_rotation_degree: 0
-  verbosity: info
-
-schema:
-  detection_interval: int(1,30)
-  video_rotation_degree: select(0|90|180|270)
-  verbosity: select(debug|info|warning|error)

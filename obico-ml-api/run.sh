@@ -33,7 +33,12 @@ echo "[INFO] Detection interval: ${DETECTION_INTERVAL}s"
 echo "[INFO] Video rotation: ${VIDEO_ROTATION}°"
 echo "[INFO] Log level: ${VERBOSITY}"
 
-# Start the Obico ML API server
+# Start the Obico ML API server using gunicorn
 # The base image has the ML models and dependencies pre-installed
 cd /app
-exec python3 -u main.py
+
+exec gunicorn \
+    --bind 0.0.0.0:3333 \
+    --workers 1 \
+    --access-logfile - \
+    wsgi

@@ -10,6 +10,5 @@ RUN chmod a+x /run.sh
 # The base image already exposes port 3333 and has ML models included
 EXPOSE 3333
 
-# Use the base image's init system
-ENTRYPOINT ["/init"]
+# Run the startup script directly (the base image doesn't have /init)
 CMD ["/run.sh"]

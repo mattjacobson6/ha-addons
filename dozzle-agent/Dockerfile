@@ -9,5 +9,5 @@ FROM ${BUILD_FROM}
 
 EXPOSE 8080
 
-# Run the official Dozzle entrypoint
-ENTRYPOINT ["dozzle"]
+# Use the official Dozzle image's default entrypoint
+# (no need to override - the base image handles it)

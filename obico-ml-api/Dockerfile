@@ -1,15 +1,15 @@
-# syntax=docker/dockerfile:1
-# Pre-built image hosted on ghcr.io — built via GitHub Actions from source.
-# See .github/workflows/build.yml for build details.
-
-ARG BUILD_FROM=ghcr.io/mattjacobson6/obico-ml-api:latest
+# BUILD_FROM is injected by HA Supervisor from build.yaml
+# Uses The Spaghetti Detective's official ml_api_base image (pre-built, production-tested)
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Copy run script
+# Copy HA addon startup script
 COPY run.sh /run.sh
-RUN chmod +x /run.sh
+RUN chmod a+x /run.sh
 
+# The base image already exposes port 3333 and has ML models included
 EXPOSE 3333
 
+# Use the base image's init system
 ENTRYPOINT ["/init"]
 CMD ["/run.sh"]

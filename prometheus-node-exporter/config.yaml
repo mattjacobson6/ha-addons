@@ -1,0 +1,19 @@
+name: Prometheus Node Exporter
+description: >-
+  Hardware and OS metrics exporter for Prometheus. Exposes system metrics
+  like CPU, memory, disk, and network usage for monitoring and alerting.
+version: "1.0.0"
+slug: prometheus_node_exporter
+url: https://github.com/mattjacobson6/ha-addons/tree/main/prometheus-node-exporter
+
+init: false
+startup: services
+boot: auto
+
+arch:
+  - amd64
+
+ports:
+  9100/tcp: 9100
+ports_description:
+  9100/tcp: Node Exporter metrics endpoint

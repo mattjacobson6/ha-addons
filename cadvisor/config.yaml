@@ -18,7 +18,6 @@ ports:
 ports_description:
   8080/tcp: cAdvisor Web UI and API
 
-docker_api: true
 privileged: true
 host_network: true
 host_pid: true

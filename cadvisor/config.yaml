@@ -1,7 +1,7 @@
 name: cAdvisor
-description: Google's cAdvisor for container performance monitoring
-version: "1.0.2"
+version: "1.0.3"
 slug: cadvisor
+description: Analyzes resource usage and performance characteristics of running containers
 url: https://github.com/mattjacobson6/ha-addons/tree/main/cadvisor
 
 init: false
@@ -13,8 +13,34 @@ arch:
 
 ports:
   8080/tcp: 8080
+ports_description:
+  8080/tcp: Metrics endpoint and web UI
 
-privileged: true
-host_network: true
-host_pid: true
-apparmor: false
+webui: http://[HOST]:[PORT:8080]/
+docker_api: true
+full_access: true
+host_ipc: true
+host_dbus: true
+
+watchdog: http://[HOST]:[PORT:8080]/healthz
+
+privileged:
+  - BPF
+  - DAC_READ_SEARCH
+  - IPC_LOCK
+  - NET_ADMIN
+  - NET_RAW
+  - PERFMON
+  - SYS_ADMIN
+  - SYS_MODULE
+  - SYS_NICE
+  - SYS_PTRACE
+  - SYS_RAWIO
+  - SYS_RESOURCE
+  - SYS_TIME
+
+options:
+  custom_args: ""
+
+schema:
+  custom_args: "str?"

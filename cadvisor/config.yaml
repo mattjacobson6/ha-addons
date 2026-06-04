@@ -1,8 +1,6 @@
 name: cAdvisor
-description: >-
-  Google's cAdvisor (Container Advisor) for monitoring container performance
-  and resource usage. Collects, aggregates, and exports container metrics.
-version: "1.0.1"
+description: Google's cAdvisor for container performance monitoring
+version: "1.0.2"
 slug: cadvisor
 url: https://github.com/mattjacobson6/ha-addons/tree/main/cadvisor
 
@@ -15,8 +13,6 @@ arch:
 
 ports:
   8080/tcp: 8080
-ports_description:
-  8080/tcp: cAdvisor Web UI and API
 
 privileged: true
 host_network: true

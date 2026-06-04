@@ -31,3 +31,35 @@ updates:
       - "docker"
     reviewers:
       - "mattjacobson6"
+
+  # Monitor cAdvisor base image
+  - package-ecosystem: "docker"
+    directory: "/cadvisor"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:30"
+    commit-message:
+      prefix: "chore(deps): "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "mattjacobson6"
+
+  # Monitor Prometheus Node Exporter base image
+  - package-ecosystem: "docker"
+    directory: "/prometheus-node-exporter"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:45"
+    commit-message:
+      prefix: "chore(deps): "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "mattjacobson6"

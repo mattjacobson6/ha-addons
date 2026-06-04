@@ -20,3 +20,6 @@ ports_description:
 
 docker_api: true
 privileged: true
+host_network: true
+host_pid: true
+apparmor: false

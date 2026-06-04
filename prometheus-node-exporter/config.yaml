@@ -17,3 +17,8 @@ ports:
   9100/tcp: 9100
 ports_description:
   9100/tcp: Node Exporter metrics endpoint
+
+# Required for host system metrics access
+host_network: true
+host_pid: true
+apparmor: false

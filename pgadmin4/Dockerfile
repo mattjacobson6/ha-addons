@@ -61,7 +61,7 @@ RUN \
     corepack enable && \
     yarn set version berry && \
     yarn set version 3 && \
-    sed -i '/approvedGitRepositories/d' .yarnrc.yml && \
+    printf 'checksumBehavior: update\nenableScripts: true\nlogFilters:\n  - code: YN0013\n    level: discard\nnodeLinker: node-modules\n' > .yarnrc.yml && \
     yarn install && \
     yarn run bundle && \
     rm -rf node_modules \

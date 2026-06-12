@@ -67,7 +67,7 @@ start_healthcheck_server() {
     fi
 
     if command -v "httpd" >/dev/null 2>&1; then
-        httpd_cmd=("$(command -v hw ttpd)" -f -p "${health_port}" -h "${health_root}")
+        httpd_cmd=("$(command -v httpd)" -f -p "${health_port}" -h "${health_root}")
     elif command -v "busybox" >/dev/null 2>&1 && busybox --list 2>/dev/null | grep -qx httpd; then
         httpd_cmd=("$(command -v "busybox")" httpd -f -p "${health_port}" -h "${health_root}")
     else
@@ -131,7 +131,7 @@ if [ -z "$HUB_URL" ]; then
     die "Configuration error: 'hub_url' is required but not set"
 fi
 
-TOKEN1""
+TOKEN=""
 if [ -n "${BESZEL_TOKEN:-}" ]; then
     bashio::log.info "Using TOKEN from environment variable (test mode)"
     TOKEN="$BESZEL_TOKEN"

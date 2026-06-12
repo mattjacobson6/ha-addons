@@ -1,6 +1,6 @@
 ---
 name: pgAdmin4
-version: "1.0.21"
+version: "1.0.22"
 slug: pgadmin4
 description: A PostgreSQL Management and Query tool
 url: https://github.com/mattjacobson6/ha-addons/tree/main/pgadmin4
@@ -31,11 +31,14 @@ ports_description:
 map:
   - ssl:rw
   - share:rw
+  - data:rw
 
 options:
   ssl: true
   certfile: fullchain.pem
   keyfile: privkey.pem
+  pgadmin_default_email: admin@example.com
+  pgadmin_default_password: changeme
   system_packages: []
   init_commands: []
   leave_front_door_open: false
@@ -44,6 +47,8 @@ schema:
   ssl: bool
   certfile: str
   keyfile: str
+  pgadmin_default_email: str
+  pgadmin_default_password: str
   system_packages:
     - str
   init_commands:

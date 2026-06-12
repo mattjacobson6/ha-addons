@@ -5,7 +5,7 @@ bashio::log.info "Starting pgAdmin4..."
 
 cd /pgadmin4
 
-sudo /usr/sbin/postfix start
+sudo /usr/sbin/postfix start 2>/dev/null || true
 
 timeout=$(cd /pgadmin4 && /venv/bin/python3 -c 'import config; print(config.SESSION_EXPIRATION_TIME * 60 * 60 * 24)')
 

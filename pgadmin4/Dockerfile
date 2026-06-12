@@ -215,7 +215,6 @@ RUN true
 COPY --from=app-builder /tmp/pgadmin4-clone/pkg/docker/run_pgadmin.py /pgadmin4/
 COPY --from=app-builder /tmp/pgadmin4-clone/pkg/docker/gunicorn_config.py /pgadmin4/
 COPY --from=app-builder /tmp/pgadmin4-clone/LICENSE /pgadmin4/
-COPY --from=app-builder /tmp/pgadmin4-clone/DEPENDENCIES /pgadmin4/
 
 # Install runtime dependencies and configure everything in one RUN step
 # hadolint ignore=DL3018, DL3019

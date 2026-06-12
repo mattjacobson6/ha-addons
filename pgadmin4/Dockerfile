@@ -32,10 +32,11 @@ RUN --mount=type=cache,id=apk,sharing=locked,target=/var/cache/apk \
         yarn \
         zlib-dev
 
-# Clone pgAdmin4 from GitHub
+# Clone pgAdmin4 - move .git to / so the Yarn bundle step can find it
+# (the build process runs git commands from /pgadmin4/web)
 RUN \
-    mkdir /tmp/pgadmin4-clone && \
-    git clone --depth 1 https://github.com/pgadmin-org/pgadmin4.git /tmp/pgadmin4-clone
+    git clone --depth 1 https://github.com/pgadmin-org/pgadmin4.git /tmp/pgadmin4-clone && \
+    mv /tmp/pgadmin4-clone/.git /
 
 WORKDIR /pgadmin4
 
@@ -72,7 +73,8 @@ RUN \
            webpack.* \
            jest.config.js \
            babel.* \
-           ./pgadmin/static/js/generated/.cache
+           ./pgadmin/static/js/generated/.cache \
+           /.git
 
 #########################################################################
 # Next, create the base environment for Python

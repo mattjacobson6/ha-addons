@@ -3,5 +3,6 @@
 
 bashio::log.info "Starting pgAdmin4..."
 
-# Run the pgAdmin4 wrapper script
-exec /usr/local/bin/run-pgadmin.sh
+# Run pgAdmin4 using the installed Python venv
+cd /pgadmin4
+exec /venv/bin/python3 /pgadmin4/run_pgadmin.py

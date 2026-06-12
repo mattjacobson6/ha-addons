@@ -34,7 +34,8 @@ if [[ "${mode}" == "edge" ]]; then
     bashio::log.info "Hawser starting in Edge mode (${AGENT_NAME}) → ${DOCKHAND_SERVER_URL}"
 else
     PORT="$(bashio::config 'port')"
-    BIND_ADDRESS="$(bashio::config 'bind_address')"
+    # Always bind to 0.0.0.0 inside the container - port is exposed through HA networking
+    BIND_ADDRESS="0.0.0.0"
     export PORT BIND_ADDRESS
 
     if bashio::config.has_value 'token'; then
@@ -49,7 +50,7 @@ else
         TLS_KEY="$(resolve_ssl_path "$(bashio::config 'tls_key')")"
         export TLS_KEY
     fi
-    bashio::log.info "Hawser starting in Standard mode (${AGENT_NAME}) on ${BIND_ADDRESS}:${PORT}"
+    bashio::log.info "Hawser starting in Standard mode (${AGENT_NAME}) on port ${PORT}"
 fi
 
 exec /usr/local/bin/hawser

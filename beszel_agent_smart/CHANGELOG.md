@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Fix: further run.sh corruption (RO_FLAG line with non-printable byte)
+
 ## 1.0.1
 
 - Fix: correct run.sh corruption from initial import (TOKEN assignment, httpd path)

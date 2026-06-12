@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+﻿﻿#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
 set -euo pipefail
@@ -182,7 +182,8 @@ if supervisor_api_available && bashio::config.has_value 'custom_volumes'; then
             # Parse :ro suffix if present
             ACTUAL_PATH="${CONTAINER_PATH%:ro}"
             ACTUAL_PATH="${ACTUAL_PATH%:rw}"
-            RO_FLAG=")`           [[ "$CONTAINER_PATH" == *":ro" ]] && RO_FLAG=" (read-only)"
+            RO_FLAG=""
+            [[ "$CONTAINER_PATH" == *":ro" ]] && RO_FLAG=" (read-only)"
             [[ "$CONTAINER_PATH" == *":rw" ]] && RO_FLAG=" (read-write)"
             
             bashio::log.info "  [${volume_count}] ${HOST_PATH} -> ${ACTUAL_PATH}${RO_FLAG}"

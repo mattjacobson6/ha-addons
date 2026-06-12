@@ -62,8 +62,8 @@ RUN \
     yarn set version berry && \
     yarn set version 3 && \
     rm -f .yarnrc.yml && \
-    yarn install && \
-    yarn run bundle && \
+    yarn install --silent && \
+    yarn run bundle --silent && \
     rm -rf node_modules \
            yarn.lock \
            package.json \

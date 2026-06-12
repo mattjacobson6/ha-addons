@@ -235,6 +235,9 @@ fi
 
 start_healthcheck_server
 
+# Ensure Beszel can find the Docker socket
+export DOCKER_HOST="unix:///var/run/docker.sock"
+
 # Start the Beszel Agent
 bashio::log.info "==========================================="
 bashio::log.info "Starting Beszel Agent on port 45876..."

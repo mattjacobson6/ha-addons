@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- Fix: explicitly set DOCKER_HOST so Beszel detects Docker containers
+
 ## 1.0.3
 
 - Fix: remove UTF-8 BOM and enforce LF line endings on shell scripts via .gitattributes

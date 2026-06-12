@@ -35,7 +35,8 @@ RUN mkdir -p /var/lib/pgadmin && \
     chmod 755 /var/log/pgadmin
 
 # Create a wrapper script to run pgAdmin4
-RUN cat > /usr/local/bin/run-pgadmin.sh << 'EOF'
+RUN cat > /usr/local/bin/run-pgadmin.sh << 'EOF' && \
+    chmod +x /usr/local/bin/run-pgadmin.sh
 #!/bin/bash
 set -e
 
@@ -51,7 +52,6 @@ export PGADMIN_CONFIG_WTF_CSRF_CHECK_DEFAULT=False
 cd /var/lib/pgadmin
 exec /opt/pgadmin4/bin/python3 -m pgadmin4
 EOF
-chmod +x /usr/local/bin/run-pgadmin.sh
 
 # Copy rootfs
 COPY rootfs /

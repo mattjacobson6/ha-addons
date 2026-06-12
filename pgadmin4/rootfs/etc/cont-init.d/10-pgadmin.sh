@@ -54,10 +54,10 @@ fi
 if [ ! -f /data/pgadmin4/pgadmin4.db ]; then
     bashio::log.info "First launch — initializing pgAdmin4 database..."
 
-    export PGADMIN_DEFAULT_EMAIL
-    export PGADMIN_DEFAULT_PASSWORD
-    PGADMIN_DEFAULT_EMAIL=$(bashio::config 'pgadmin_default_email')
-    PGADMIN_DEFAULT_PASSWORD=$(bashio::config 'pgadmin_default_password')
+    export PGADMIN_SETUP_EMAIL
+    export PGADMIN_SETUP_PASSWORD
+    PGADMIN_SETUP_EMAIL=$(bashio::config 'pgadmin_default_email')
+    PGADMIN_SETUP_PASSWORD=$(bashio::config 'pgadmin_default_password')
 
     cd /pgadmin4 || exit 1
     /venv/bin/python3 run_pgadmin.py || bashio::exit.nok "Failed to initialize pgAdmin4 database"

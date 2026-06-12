@@ -87,7 +87,7 @@ ARG TARGETVARIANT
 COPY --from=app-builder /tmp/pgadmin4-clone/requirements.txt /
 
 # hadolint ignore=DL3018, DL3019
-RUN --mount=type=cache,id=apk-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/var/cache/apk \
+RUN --mount=type=cache,id=apk-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/var/cache/apk \
         apk add \
             make \
             python3 \
@@ -106,7 +106,7 @@ RUN --mount=type=cache,id=apk-${TARGETARCH}-${TARGETVARIANT},sharing=locked,targ
             libpng-dev \
             python3-dev
 
-RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
+RUN --mount=type=cache,id=pip-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
         python3 -m venv --system-site-packages --without-pip /venv && \
         /venv/bin/python3 -m pip install -r /requirements.txt && \
         apk del build-deps
@@ -120,7 +120,7 @@ ARG TARGETARCH
 ARG TARGETVARIANT
 
 # Install Sphinx
-RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
+RUN --mount=type=cache,id=pip-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
         /venv/bin/python3 -m pip install sphinx && \
         /venv/bin/python3 -m pip install sphinxcontrib-youtube
 

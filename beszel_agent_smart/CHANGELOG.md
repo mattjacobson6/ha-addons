@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Fix: remove UTF-8 BOM and enforce LF line endings on shell scripts via .gitattributes
+
 ## 1.0.2
 
 - Fix: further run.sh corruption (RO_FLAG line with non-printable byte)

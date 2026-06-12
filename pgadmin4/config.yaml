@@ -1,6 +1,6 @@
 ---
 name: pgAdmin4
-version: "1.0.28"
+version: "1.0.29"
 slug: pgadmin4
 description: A PostgreSQL Management and Query tool
 url: https://github.com/mattjacobson6/ha-addons/tree/main/pgadmin4

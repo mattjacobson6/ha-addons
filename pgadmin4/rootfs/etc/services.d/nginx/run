@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+# Wait for pgAdmin4 to become available
+while [ ! -S /tmp/pgadmin4.sock ]
+do
+    sleep 0.5
+done
+
+bashio::log.info "Starting NGinx..."
+
+# Disable HA Authentication if front door is open
+if bashio::config.true 'leave_front_door_open'; then
+    export DISABLE_HA_AUTHENTICATION=true
+fi
+
+exec nginx &
+nginx_pid=$!
+
+bashio::log.notice "pgAdmin4 is ready to accept connections."
+wait "${nginx_pid}"

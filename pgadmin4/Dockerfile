@@ -276,6 +276,7 @@ RUN date +%Y%m%d%H%M%S > /build-timestamp
 # Copy data
 COPY rootfs /
 RUN chmod +x /etc/cont-init.d/* && \
+    chmod +x /etc/services.d/nginx/* && \
     chmod +x /etc/services.d/pgadmin4/*
 
 WORKDIR /

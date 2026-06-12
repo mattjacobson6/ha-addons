@@ -78,19 +78,24 @@ RUN \
 
 #########################################################################
 # Next, create the base environment for Python
-# Use BUILD_FROM so the Python version matches the final image exactly
+# Use alpine:3.20 to match the Alpine version in hassio-addons/base 17.x
+# (ensures Python 3.12 venv packages are compatible with the final image)
 #########################################################################
-FROM ${BUILD_FROM} AS env-builder
+# hadolint ignore=DL3007
+FROM alpine:3.20 AS env-builder
 ARG TARGETARCH
 ARG TARGETVARIANT
 
 COPY --from=app-builder /tmp/pgadmin4-clone/requirements.txt /
 
 # hadolint ignore=DL3018, DL3019
-RUN apk add --no-cache \
+# hadolint ignore=DL3018, DL3019
+RUN --mount=type=cache,id=apk-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/var/cache/apk \
+        apk add \
             make \
             python3 \
-            py3-pip \
+            py3-pip && \
+        apk add --virtual build-deps \
             build-base \
             openssl-dev \
             libffi-dev \
@@ -104,9 +109,10 @@ RUN apk add --no-cache \
             libpng-dev \
             python3-dev
 
-RUN --mount=type=cache,id=pip-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
+RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
         python3 -m venv --system-site-packages --without-pip /venv && \
-        /venv/bin/python3 -m pip install -r /requirements.txt
+        /venv/bin/python3 -m pip install -r /requirements.txt && \
+        apk del build-deps
 
 #########################################################################
 # Now, create a documentation build container for the Sphinx docs
@@ -117,7 +123,7 @@ ARG TARGETARCH
 ARG TARGETVARIANT
 
 # Install Sphinx
-RUN --mount=type=cache,id=pip-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
+RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
         /venv/bin/python3 -m pip install sphinx && \
         /venv/bin/python3 -m pip install sphinxcontrib-youtube
 

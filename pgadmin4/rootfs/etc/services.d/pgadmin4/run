@@ -3,6 +3,27 @@
 
 bashio::log.info "Starting pgAdmin4..."
 
-# Run pgAdmin4 using the installed Python venv
 cd /pgadmin4
-exec /venv/bin/python3 /pgadmin4/run_pgadmin.py
+
+sudo /usr/sbin/postfix start
+
+timeout=$(cd /pgadmin4 && /venv/bin/python3 -c 'import config; print(config.SESSION_EXPIRATION_TIME * 60 * 60 * 24)')
+
+exec /venv/bin/gunicorn \
+    --timeout "${timeout}" \
+    --bind unix:/tmp/pgadmin4.sock \
+    --workers=1 \
+    --threads=25 \
+    --chdir /pgadmin4 \
+    -c gunicorn_config.py \
+    pgAdmin4:app &
+
+pgadmin_pid=$!
+
+bashio::log.info "Waiting for pgAdmin4 to start..."
+while [ ! -S /tmp/pgadmin4.sock ]; do
+    sleep 0.5
+done
+
+bashio::log.info "pgAdmin4 is ready"
+wait "${pgadmin_pid}"

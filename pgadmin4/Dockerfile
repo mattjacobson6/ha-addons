@@ -78,9 +78,9 @@ RUN \
 
 #########################################################################
 # Next, create the base environment for Python
+# Use BUILD_FROM so the Python version matches the final image exactly
 #########################################################################
-# hadolint ignore=DL3007
-FROM alpine:latest AS env-builder
+FROM ${BUILD_FROM} AS env-builder
 ARG TARGETARCH
 ARG TARGETVARIANT
 

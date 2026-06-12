@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Revert: remove explicit DOCKER_HOST (not needed; protection mode was the issue)
+
 ## 1.0.4
 
 - Fix: explicitly set DOCKER_HOST so Beszel detects Docker containers

@@ -1,6 +1,6 @@
 ---
 name: pgAdmin4
-version: "1.0.29"
+version: "1.0.30"
 slug: pgadmin4
 description: A PostgreSQL Management and Query tool
 url: https://github.com/mattjacobson6/ha-addons/tree/main/pgadmin4
@@ -20,13 +20,6 @@ auth_api: true
 init: false
 homeassistant: "0.92.0"
 timeout: 20
-
-ports:
-  80/tcp: 80
-  443/tcp: 443
-ports_description:
-  80/tcp: Web interface HTTP (not required when using Ingress)
-  443/tcp: Web interface HTTPS/SSL (not required when using Ingress)
 
 map:
   - ssl:rw

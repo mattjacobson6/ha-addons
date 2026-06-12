@@ -196,15 +196,16 @@ ARG TARGETVARIANT
 # Copy in the Python packages
 COPY --from=env-builder /venv /venv
 
-# Copy in the tools
+# Copy in the PostgreSQL tools
 COPY --from=tool-builder /usr/local/pgsql /usr/local/
-COPY --from=pg17-builder /usr/local/lib/libpq.so.5.17 /usr/lib/
-COPY --from=pg17-builder /usr/lib/libzstd.so.1.5.6 /usr/lib/
-COPY --from=pg17-builder /usr/lib/liblz4.so.1.10.0 /usr/lib/
 
-RUN ln -s libpq.so.5.17 /usr/lib/libpq.so.5 && \
-    ln -s libpq.so.5.17 /usr/lib/libpq.so && \
-    ln -s liblz4.so.1.10.0 /usr/lib/liblz4.so.1
+# Copy PostgreSQL libraries from pg17-builder
+COPY --from=pg17-builder /usr/local/lib/ /usr/local/lib/
+COPY --from=pg17-builder /usr/lib/libpq.so.5* /usr/lib/
+
+# Create symlinks for libpq
+RUN ls /usr/lib/libpq.so.* | head -1 | xargs -I {} ln -sf {} /usr/lib/libpq.so.5 && \
+    ls /usr/lib/libpq.so.* | head -1 | xargs -I {} ln -sf {} /usr/lib/libpq.so || true
 
 WORKDIR /pgadmin4
 ENV PYTHONPATH=/pgadmin4

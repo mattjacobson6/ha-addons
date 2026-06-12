@@ -1,23 +1,57 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Install nginx for ingress support and additional tools
+# Install build dependencies and runtime dependencies
 RUN apk add --no-cache \
         nginx \
+        ca-certificates \
+        curl \
+        git \
         python3 \
         py3-pip \
-        py3-requests \
-        curl \
-        ca-certificates
+        postgresql-client \
+        openssl && \
+    apk add --virtual build-deps \
+        python3-dev \
+        build-base \
+        postgresql-dev \
+        libffi-dev \
+        openssl-dev
 
-# Install pgAdmin4
-RUN pip install --no-cache-dir pgadmin4
+# Create pgAdmin4 virtual environment and install
+RUN python3 -m venv /opt/pgadmin4 && \
+    /opt/pgadmin4/bin/pip install --upgrade pip setuptools wheel && \
+    /opt/pgadmin4/bin/pip install --no-cache-dir pgadmin4 gunicorn
 
-# Create pgadmin directories
+# Clean up build dependencies
+RUN apk del build-deps && \
+    rm -rf /var/cache/apk/*
+
+# Create necessary directories
 RUN mkdir -p /var/lib/pgadmin && \
     mkdir -p /var/log/pgadmin && \
+    mkdir -p /pgadmin4 && \
     chmod 755 /var/lib/pgadmin && \
     chmod 755 /var/log/pgadmin
+
+# Create a wrapper script to run pgAdmin4
+RUN cat > /usr/local/bin/run-pgadmin.sh << 'EOF'
+#!/bin/bash
+set -e
+
+export PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=false
+export PGADMIN_CONFIG_PROXY_X_FOR_COUNT=1
+export PGADMIN_CONFIG_PROXY_X_PROTO_COUNT=1
+export PGADMIN_CONFIG_PROXY_X_HOST_COUNT=1
+export PGADMIN_CONFIG_PROXY_X_PORT_COUNT=1
+export PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10
+export PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=False
+export PGADMIN_CONFIG_WTF_CSRF_CHECK_DEFAULT=False
+
+cd /var/lib/pgadmin
+exec /opt/pgadmin4/bin/python3 -m pgadmin4
+EOF
+chmod +x /usr/local/bin/run-pgadmin.sh
 
 # Copy rootfs
 COPY rootfs /

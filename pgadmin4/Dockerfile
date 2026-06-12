@@ -16,8 +16,7 @@ RUN apk add --no-cache --virtual build-deps \
         python3-dev \
         build-base \
         postgresql-dev \
-        libffi-dev \
-        openssl-dev && \
+        libffi-dev && \
     python3 -m venv /opt/pgadmin4 && \
     /opt/pgadmin4/bin/pip install --upgrade pip setuptools wheel && \
     /opt/pgadmin4/bin/pip install --no-cache-dir pgadmin4 gunicorn && \

@@ -63,3 +63,19 @@ updates:
       - "docker"
     reviewers:
       - "mattjacobson6"
+
+  # Monitor Hawser Agent for Dockhand base image
+  - package-ecosystem: "docker"
+    directory: "/dockhand_hawser"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+    commit-message:
+      prefix: "chore(deps): "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "mattjacobson6"

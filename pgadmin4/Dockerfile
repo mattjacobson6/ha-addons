@@ -61,7 +61,6 @@ RUN \
     corepack enable && \
     yarn set version berry && \
     yarn set version 3 && \
-    rm -f .yarnrc.yml && \
     yarn install && \
     yarn run bundle && \
     rm -rf node_modules \
@@ -82,10 +81,7 @@ FROM alpine:latest AS env-builder
 ARG TARGETARCH
 ARG TARGETVARIANT
 
-# Clone pgAdmin4 to get requirements.txt
-RUN apk add --no-cache git && \
-    mkdir /tmp/pgadmin4-clone && \
-    git clone --depth 1 https://github.com/pgadmin-org/pgadmin4.git /tmp/pgadmin4-clone
+COPY --from=app-builder /tmp/pgadmin4-clone/requirements.txt /
 
 # hadolint ignore=DL3018, DL3019
 RUN --mount=type=cache,id=apk-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/var/cache/apk \
@@ -109,7 +105,7 @@ RUN --mount=type=cache,id=apk-${TARGETARCH}-${TARGETVARIANT},sharing=locked,targ
 
 RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
         python3 -m venv --system-site-packages --without-pip /venv && \
-        /venv/bin/python3 -m pip install -r /tmp/pgadmin4-clone/requirements.txt && \
+        /venv/bin/python3 -m pip install -r /requirements.txt && \
         apk del build-deps
 
 #########################################################################
@@ -127,9 +123,8 @@ RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,targ
 
 WORKDIR /pgadmin4
 
-# Copy the docs and web from cloned repo
-RUN cp -r /tmp/pgadmin4-clone/docs /pgadmin4/ && \
-    cp -r /tmp/pgadmin4-clone/web /pgadmin4/
+COPY --from=app-builder /tmp/pgadmin4-clone/docs /pgadmin4/docs
+COPY --from=app-builder /tmp/pgadmin4-clone/web /pgadmin4/web
 RUN rm -rf /pgadmin4/docs/en_US/_build
 
 # Build the docs
@@ -199,14 +194,13 @@ COPY --from=env-builder /venv /venv
 
 # Copy in the PostgreSQL tools
 COPY --from=tool-builder /usr/local/pgsql /usr/local/
+COPY --from=pg17-builder /usr/local/lib/libpq.so.5.17 /usr/lib/
+COPY --from=pg17-builder /usr/lib/libzstd.so.1.5.6 /usr/lib/
+COPY --from=pg17-builder /usr/lib/liblz4.so.1.10.0 /usr/lib/
 
-# Copy PostgreSQL libraries from pg17-builder
-COPY --from=pg17-builder /usr/local/lib/ /usr/local/lib/
-COPY --from=pg17-builder /usr/lib/libpq.so.5* /usr/lib/
-
-# Create symlinks for libpq
-RUN ls /usr/lib/libpq.so.* | head -1 | xargs -I {} ln -sf {} /usr/lib/libpq.so.5 && \
-    ls /usr/lib/libpq.so.* | head -1 | xargs -I {} ln -sf {} /usr/lib/libpq.so || true
+RUN ln -s libpq.so.5.17 /usr/lib/libpq.so.5 && \
+    ln -s libpq.so.5.17 /usr/lib/libpq.so && \
+    ln -s liblz4.so.1.10.0 /usr/lib/liblz4.so.1
 
 WORKDIR /pgadmin4
 ENV PYTHONPATH=/pgadmin4
@@ -218,16 +212,10 @@ COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
 # Dumb fix for a docker build: https://github.com/moby/moby/issues/37965
 RUN true
 
-# Get pgAdmin4 scripts and license from source
-RUN apk add --no-cache git && \
-    mkdir /tmp/pgadmin4-final && \
-    git clone --depth 1 https://github.com/pgadmin-org/pgadmin4.git /tmp/pgadmin4-final && \
-    cp /tmp/pgadmin4-final/pkg/docker/run_pgadmin.py /pgadmin4/ && \
-    cp /tmp/pgadmin4-final/pkg/docker/gunicorn_config.py /pgadmin4/ && \
-    cp /tmp/pgadmin4-final/LICENSE /pgadmin4/ && \
-    cp /tmp/pgadmin4-final/DEPENDENCIES /pgadmin4/ && \
-    rm -rf /tmp/pgadmin4-final && \
-    apk del git
+COPY --from=app-builder /tmp/pgadmin4-clone/pkg/docker/run_pgadmin.py /pgadmin4/
+COPY --from=app-builder /tmp/pgadmin4-clone/pkg/docker/gunicorn_config.py /pgadmin4/
+COPY --from=app-builder /tmp/pgadmin4-clone/LICENSE /pgadmin4/
+COPY --from=app-builder /tmp/pgadmin4-clone/DEPENDENCIES /pgadmin4/
 
 # Install runtime dependencies and configure everything in one RUN step
 # hadolint ignore=DL3018, DL3019
@@ -244,7 +232,12 @@ RUN --mount=type=cache,id=final-apk-${TARGETARCH}-${TARGETVARIANT},sharing=locke
         tzdata \
         libedit \
         libldap \
-        libcap \
+        libcap
+
+RUN --mount=type=cache,id=final-apk-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/var/cache/apk \
+    apk add \
+        lua-resty-http \
+        nginx-mod-http-lua \
         nginx
 
 RUN --mount=type=cache,id=pip-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \

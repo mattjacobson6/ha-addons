@@ -45,6 +45,14 @@ PostgreSQL database management and administration web interface.
 - **Port:** 80/443 (HTTP/HTTPS)
 - **Features:** Database management, query tools, PostgreSQL 12-17 support, SSL/TLS
 
+## 💾 Beszel Agent (S.M.A.R.T.)
+
+System monitoring agent that reports to a Beszel Hub, with S.M.A.R.T. disk health monitoring.
+
+- **Ports:** 45876 (agent SSH listener), 45877 (watchdog healthcheck)
+- **Features:** CPU/memory/disk/network metrics, Docker addon stats, S.M.A.R.T. disk health
+- **Source:** Replicated from [vineetchoudhary/home-assistant-beszel-agent](https://github.com/vineetchoudhary/home-assistant-beszel-agent)
+
 ## License
 
 MIT — See [LICENSE](LICENSE)

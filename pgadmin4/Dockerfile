@@ -87,12 +87,10 @@ ARG TARGETVARIANT
 COPY --from=app-builder /tmp/pgadmin4-clone/requirements.txt /
 
 # hadolint ignore=DL3018, DL3019
-RUN --mount=type=cache,id=apk-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/var/cache/apk \
-        apk add \
+RUN apk add --no-cache \
             make \
             python3 \
-            py3-pip && \
-        apk add --virtual build-deps \
+            py3-pip \
             build-base \
             openssl-dev \
             libffi-dev \
@@ -108,8 +106,7 @@ RUN --mount=type=cache,id=apk-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked
 
 RUN --mount=type=cache,id=pip-base-${TARGETARCH}-${TARGETVARIANT},sharing=locked,target=/root/.cache \
         python3 -m venv --system-site-packages --without-pip /venv && \
-        /venv/bin/python3 -m pip install -r /requirements.txt && \
-        apk del build-deps
+        /venv/bin/python3 -m pip install -r /requirements.txt
 
 #########################################################################
 # Now, create a documentation build container for the Sphinx docs

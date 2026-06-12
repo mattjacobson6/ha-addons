@@ -61,7 +61,7 @@ RUN \
     corepack enable && \
     yarn set version berry && \
     yarn set version 3 && \
-    printf 'logFilters:\n  - code: "YN0013"\n    level: discard\n' >> .yarnrc.yml && \
+    sed -i '/approvedGitRepositories/d' .yarnrc.yml && \
     yarn install && \
     yarn run bundle && \
     rm -rf node_modules \

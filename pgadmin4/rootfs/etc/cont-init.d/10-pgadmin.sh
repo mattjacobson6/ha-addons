@@ -12,6 +12,7 @@ mkdir -p /var/log/pgadmin
 
 # Write config_distro.py (always regenerated so config changes take effect)
 cat << EOF > /pgadmin4/config_distro.py
+SERVER_MODE = False
 CA_FILE = '/etc/ssl/certs/ca-certificates.crt'
 LOG_FILE = '/dev/null'
 HELP_PATH = '../../docs'
@@ -50,19 +51,5 @@ if bashio::config.has_value 'init_commands'; then
     done <<< "$(bashio::config 'init_commands')"
 fi
 
-# Initialize the database on first launch
-if [ ! -f /data/pgadmin4/pgadmin4.db ]; then
-    bashio::log.info "First launch — initializing pgAdmin4 database..."
-
-    export PGADMIN_SETUP_EMAIL
-    export PGADMIN_SETUP_PASSWORD
-    PGADMIN_SETUP_EMAIL=$(bashio::config 'pgadmin_default_email')
-    PGADMIN_SETUP_PASSWORD=$(bashio::config 'pgadmin_default_password')
-
-    cd /pgadmin4 || exit 1
-    /venv/bin/python3 run_pgadmin.py || bashio::exit.nok "Failed to initialize pgAdmin4 database"
-
-    bashio::log.info "Database initialized successfully"
-fi
 
 bashio::log.info "pgAdmin4 initialization complete"

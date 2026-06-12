@@ -1,7 +1,19 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Wait for pgAdmin4 socket before starting nginx
+while [ ! -S /tmp/pgadmin4.sock ]; do
+    sleep 0.5
+done
+
 bashio::log.info "Starting NGINX for ingress support..."
 
-# Start nginx in foreground
-exec nginx -g "daemon off;"
+if bashio::config.true 'leave_front_door_open'; then
+    export DISABLE_HA_AUTHENTICATION=true
+fi
+
+nginx &
+nginx_pid=$!
+
+bashio::log.notice "pgAdmin4 is ready to accept connections."
+wait "${nginx_pid}"

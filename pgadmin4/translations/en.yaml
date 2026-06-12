@@ -1,0 +1,36 @@
+---
+configuration:
+  ssl:
+    name: SSL
+    description: >-
+      Enable SSL/HTTPS support for the pgAdmin4 web interface.
+      Requires a valid SSL certificate and key to be configured.
+  certfile:
+    name: SSL certificate file
+    description: >-
+      Path to the SSL certificate file. Relative paths are resolved under /ssl.
+      Only used when SSL is enabled. Default is fullchain.pem.
+  keyfile:
+    name: SSL private key file
+    description: >-
+      Path to the SSL private key file. Relative paths are resolved under /ssl.
+      Only used when SSL is enabled. Default is privkey.pem.
+  system_packages:
+    name: System packages
+    description: >-
+      List of additional Alpine Linux packages to install at startup.
+      Example: ["postgresql-client", "git"]. Leave empty for no extra packages.
+  init_commands:
+    name: Initialization commands
+    description: >-
+      Shell commands to run during addon startup, after packages are installed.
+      Useful for custom configuration or setup. Commands run as root.
+  leave_front_door_open:
+    name: Leave front door open
+    description: >-
+      Disable password authentication. When enabled, pgAdmin4 requires only
+      your Home Assistant authentication. For testing only - not recommended
+      for production.
+network:
+  80/tcp: HTTP web interface (not required when using Ingress)
+  443/tcp: HTTPS/SSL web interface (not required when using Ingress)

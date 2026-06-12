@@ -79,3 +79,19 @@ updates:
       - "docker"
     reviewers:
       - "mattjacobson6"
+
+  # Monitor pgAdmin4 base image
+  - package-ecosystem: "docker"
+    directory: "/pgadmin4"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:15"
+    commit-message:
+      prefix: "chore(deps): "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "mattjacobson6"

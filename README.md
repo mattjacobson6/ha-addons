@@ -38,6 +38,13 @@ Docker management agent that bridges Home Assistant to Dockhand server.
 - **Ports:** 2376 (Standard mode Docker API)
 - **Features:** Container/image/network/volume/stack management, ingress web UI
 
+## 🗄️ pgAdmin4
+
+PostgreSQL database management and administration web interface.
+
+- **Port:** 80/443 (HTTP/HTTPS)
+- **Features:** Database management, query tools, PostgreSQL 12-17 support, SSL/TLS
+
 ## License
 
 MIT — See [LICENSE](LICENSE)

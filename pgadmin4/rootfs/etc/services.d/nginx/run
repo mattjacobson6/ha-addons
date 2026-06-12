@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+bashio::log.info "Starting NGINX for ingress support..."
+
+# Start nginx in foreground
+exec nginx -g "daemon off;"

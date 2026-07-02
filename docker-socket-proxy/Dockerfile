@@ -1,10 +1,7 @@
-# BUILD_FROM is injected by HA Supervisor from build.yaml (required since Supervisor 2026.04.0)
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM haproxy:3.3-alpine
 
-# Install HAProxy and create required directories
-RUN apk add --no-cache haproxy && \
-    mkdir -p /var/lib/haproxy && \
+# Create required directories
+RUN mkdir -p /var/lib/haproxy && \
     touch /var/lib/haproxy/server-state
 
 COPY docker-entrypoint.sh /usr/local/bin/

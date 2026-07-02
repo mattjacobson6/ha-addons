@@ -1,1 +1,2 @@
-# HA Supervisor will use its default Alpine base image and we'll install haproxy via apk
+# Base image is now sourced directly from the official HAProxy Docker Hub image (haproxy:3.3-alpine).
+# BUILD_FROM is no longer used; Dependabot will track haproxy image updates via the Dockerfile.

@@ -82,7 +82,7 @@ RUN \
 # (ensures Python 3.12 venv packages are compatible with the final image)
 #########################################################################
 # hadolint ignore=DL3007
-FROM alpine:3.20 AS env-builder
+FROM alpine:3.24 AS env-builder
 ARG TARGETARCH
 ARG TARGETVARIANT
 
